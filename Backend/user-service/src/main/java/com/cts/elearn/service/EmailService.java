@@ -9,10 +9,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
-    @Autowired
     private JavaMailSender mailSender;
+    
+    @Autowired
+    public EmailService(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
 
-    @Value("${spring.mail.username}") // ✅ Your Gmail SMTP Username
+    @Value("${spring.mail.username}") 
     private String fromEmail;
 
     public void sendEmail(String toEmail, String subject, String body) {

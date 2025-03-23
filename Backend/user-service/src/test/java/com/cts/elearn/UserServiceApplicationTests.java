@@ -3,7 +3,7 @@ package com.cts.elearn;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@SpringBootTest(classes = UserServiceApplication.class)
 class UserServiceApplicationTests {
 
 	@Test
