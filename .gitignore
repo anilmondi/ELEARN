@@ -1,0 +1,35 @@
+# Java & Spring Boot
+target/
+*.log
+*.class
+*.jar
+*.war
+*.ear
+
+# IntelliJ / Eclipse / VSCode
+.idea/
+.vscode/
+*.iml
+
+# Node.js / Angular
+node_modules/
+dist/
+Frontend/node_modules/
+Frontend/dist/
+Frontend/.angular/
+
+.metadata/
+# Environment Variables
+.env
+*.properties
+*.yml
+
+Backend/**/target/
+Backend/**/logs/
+Backend/**/.metadata/
+Backend/**/.env
+Backend/**/*.properties
+
+!Backend/api-gateway/src/
+!Backend/api-gateway/pom.xml
+
