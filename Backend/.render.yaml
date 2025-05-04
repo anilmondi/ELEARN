@@ -8,11 +8,11 @@ services:
     plan: free
     envVars:
       - key: DB_URL
-        value: jdbc:mysql://localhost:3306/elearn
+        value: jdbc:mysql://shinkansen.proxy.rlwy.net:40324/railway
       - key: DB_USERNAME
         value: root
       - key: DB_PASSWORD
-        value: Anilmondi@45
+        value: WAwDLoZQeArHmbNFzKHSUqFHgEomFgEM
       - key: ADMIN_USER
         value: admin
       - key: ADMIN_PASS

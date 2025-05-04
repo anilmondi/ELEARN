@@ -1,14 +1,15 @@
-# Use a Java 17 image
-FROM eclipse-temurin:17-jdk
+FROM eclipse-temurin:17-jdk-alpine
 
-# Set working directory
 WORKDIR /app
 
-# Copy everything into the image
-COPY . .
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+RUN ./mvnw dependency:go-offline
 
-# Build the app
-RUN ./mvnw clean install
+COPY src src
+RUN ./mvnw package -DskipTests
 
-# Run the app
+EXPOSE 8081
+
 CMD ["java", "-jar", "target/user-service-0.0.1-SNAPSHOT.jar"]
