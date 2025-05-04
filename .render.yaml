@@ -1,5 +1,16 @@
 services:
   - type: web
+    name: eureka-server
+    env: docker
+    repo: https://github.com/anilmondi/ELEARN
+    branch: main
+    rootDir: Backend/eureka-server
+    plan: free
+    envVars:
+      - key: EUREKA_PORT
+        value: "8761"
+
+  - type: web
     name: user-service
     env: docker
     repo: https://github.com/anilmondi/ELEARN
@@ -23,3 +34,67 @@ services:
         value: user-service
       - key: USER_SERVICE_PORT
         value: "8085"
+
+  - type: web
+    name: course-service
+    env: docker
+    repo: https://github.com/anilmondi/ELEARN
+    branch: main
+    rootDir: Backend/course-service
+    plan: free
+    envVars:
+      - key: DB_URL
+        value: jdbc:mysql://shinkansen.proxy.rlwy.net:40324/railway
+      - key: DB_USERNAME
+        value: root
+      - key: DB_PASSWORD
+        value: WAwDLoZQeArHmbNFzKHSUqFHgEomFgEM
+
+  - type: web
+    name: review-service
+    env: docker
+    repo: https://github.com/anilmondi/ELEARN
+    branch: main
+    rootDir: Backend/review-service
+    plan: free
+    envVars:
+      - key: DB_URL
+        value: jdbc:mysql://shinkansen.proxy.rlwy.net:40324/railway
+      - key: DB_USERNAME
+        value: root
+      - key: DB_PASSWORD
+        value: WAwDLoZQeArHmbNFzKHSUqFHgEomFgEM
+
+  - type: web
+    name: purchasehistory-service
+    env: docker
+    repo: https://github.com/anilmondi/ELEARN
+    branch: main
+    rootDir: Backend/purchasehistory-service
+    plan: free
+    envVars:
+      - key: DB_URL
+        value: jdbc:mysql://shinkansen.proxy.rlwy.net:40324/railway
+      - key: DB_USERNAME
+        value: root
+      - key: DB_PASSWORD
+        value: WAwDLoZQeArHmbNFzKHSUqFHgEomFgEM
+
+  - type: web
+    name: notification-service
+    env: docker
+    repo: https://github.com/anilmondi/ELEARN
+    branch: main
+    rootDir: Backend/notification-service
+    plan: free
+
+  - type: web
+    name: api-gateway
+    env: docker
+    repo: https://github.com/anilmondi/ELEARN
+    branch: main
+    rootDir: Backend/api-gateway
+    plan: free
+    envVars:
+      - key: EUREKA_PORT
+        value: "8761"
