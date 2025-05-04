@@ -1,0 +1,32 @@
+package com.cts.elearn.security;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+public class SecurityConfig {
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();  // ✅ This ensures a single instance
+    }
+    
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http
+//            .csrf().disable()
+//            .authorizeHttpRequests()
+//                .antMatchers(
+//                    "/swagger-ui/**",
+//                    "/swagger-ui.html",
+//                    "/v3/api-docs/**",
+//                    "/actuator/**"  // Optional, if you're using Spring Boot Actuator
+//                ).permitAll()
+//                .anyRequest().authenticated();  // You can adjust this based on your needs
+//        return http.build();
+//    }
+}
+

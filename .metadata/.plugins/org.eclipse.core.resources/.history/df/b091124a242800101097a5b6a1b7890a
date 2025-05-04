@@ -1,0 +1,91 @@
+package com.cts.elearn.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.cts.elearn.dao.CourseRepository;
+import com.cts.elearn.entity.Course;
+import com.cts.elearn.entity.Course.Category;
+import com.cts.elearn.entity.Course.CourseStatus;
+import com.cts.elearn.feign.UserClient;
+import com.cts.elearn.dto.UserResponse;
+
+@Service
+@Transactional
+public class CourseService {
+
+    @Autowired
+    private CourseRepository courseRepository;
+
+    @Autowired
+    private UserClient userClient;  // Inject UserClient to fetch user details
+
+    public Course createCourse(Course course) {
+        // You can verify vendor information here, if needed
+        verifyVendorExists(course.getVendorId());
+        return courseRepository.save(course);
+    }
+
+    public Course getCourseById(Long id) {
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Course not found with ID: " + id));
+        
+        // Fetch the vendor details by vendorId and add it to the response (if needed)
+        UserResponse vendor = userClient.getUserById(course.getVendorId().intValue());
+        course.setVendorName(vendor.getName()); // Optionally set vendor name or other details
+
+        return course;
+    }
+
+    public List<Course> getAllCourses() {
+        return courseRepository.findAll();
+    }
+
+    public List<Course> searchCourses(Long vendorId, Category category) {
+        if (vendorId != null && category != null) {
+            return courseRepository.findByVendorIdAndCategory(vendorId, category);
+        } else if (vendorId != null) {
+            return courseRepository.findByVendorId(vendorId);
+        } else if (category != null) {
+            return courseRepository.findByCategory(category);
+        }
+        return courseRepository.findAll();
+    }
+
+    public Course updateCourse(Long id, Course updatedCourse) {
+        Course course = getCourseById(id);
+
+        // Verify vendor exists before updating the course
+        verifyVendorExists(updatedCourse.getVendorId());
+
+        course.setCourseName(updatedCourse.getCourseName());
+        course.setDescription(updatedCourse.getDescription());
+        course.setCategory(updatedCourse.getCategory());
+        course.setVendorId(updatedCourse.getVendorId());
+        course.setStatus(updatedCourse.getStatus());
+        course.setPrice(updatedCourse.getPrice());
+
+        return courseRepository.save(course);
+    }
+
+    public void deleteCourse(Long id) {
+        Course course = getCourseById(id);
+        course.setStatus(CourseStatus.INACTIVE); // Soft delete
+        courseRepository.save(course);
+    }
+
+    private void verifyVendorExists(Long vendorId) {
+        // Call UserClient to verify the vendor (user) exists
+        try {
+            UserResponse vendor = userClient.getUserById(vendorId.intValue());
+            if (vendor == null) {
+                throw new RuntimeException("Vendor (User) not found with ID: " + vendorId);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Vendor (User) service unavailable or user not found with ID: " + vendorId, e);
+        }
+    }
+}
