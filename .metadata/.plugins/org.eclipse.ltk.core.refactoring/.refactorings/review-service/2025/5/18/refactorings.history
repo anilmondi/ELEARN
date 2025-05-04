@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Copy element &apos;SwaggerConfig.java&apos; to &apos;purchasehistory-service/src/main/java/com.cts.elearn.config&apos;&#x0D;&#x0A;- Original project: &apos;review-service&apos;&#x0D;&#x0A;- Destination element: &apos;purchasehistory-service/src/main/java/com.cts.elearn.config&apos;&#x0D;&#x0A;- Original element: &apos;com.cts.elearn.config.SwaggerConfig.java&apos;" description="Copy compilation unit" destination="=purchasehistory-service/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.cts.elearn.config" element1="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.cts.elearn.config{SwaggerConfig.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1746282053513" units="1" version="1.0"/>
-</session>
