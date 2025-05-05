@@ -11,6 +11,6 @@ RUN ./mvnw dependency:go-offline
 COPY src src 
 RUN ./mvnw clean package -DskipTests
 
-EXPOSE 8085
+EXPOSE 8083
 
-CMD ["java", "-jar", "target/user-service-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "target/notification-service-0.0.1-SNAPSHOT.jar"]
