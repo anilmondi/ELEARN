@@ -1,2 +1,16 @@
+# Maven
+**/target/
+
+# Gradle
+**/build/
+
+# Logs
+*.log
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
 .metadata/
 target/
