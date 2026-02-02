@@ -9,11 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cts.elearn.client.UserClient;
 import com.cts.elearn.dao.NotificationRepository;
+import com.cts.elearn.dto.UserRegisteredEvent;
 import com.cts.elearn.dto.UserResponse;
 import com.cts.elearn.entity.Notification;
 import com.cts.elearn.entity.Notification.NotificationStatus;
 import com.cts.elearn.entity.Notification.NotificationType;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @Transactional
 public class NotificationService {
@@ -93,4 +96,30 @@ public class NotificationService {
         }
         notificationRepository.deleteById(id);
     }
+    
+    
+    @Transactional
+    public void handleUserRegistration(UserRegisteredEvent event) {
+
+        Notification notification = new Notification();
+        notification.setRecipientId(event.getUserId().intValue());
+        notification.setNotificationType(NotificationType.EMAIL);
+        notification.setNotificationMessage("Welcome to ELEARN platform!");
+        notification.setStatus(NotificationStatus.PENDING);
+
+        Notification saved = notificationRepository.save(notification);
+
+        emailService
+            .sendEmail(event.getEmail(), "Welcome to ELEARN", "Welcome to ELEARN platform!")
+            .thenAccept(success -> {
+                if (success) {
+                    saved.setStatus(NotificationStatus.SENT);
+                    saved.setSentAt(LocalDateTime.now());
+                } else {
+                    saved.setStatus(NotificationStatus.FAILED);
+                }
+                notificationRepository.save(saved);
+            });
+    }
+
 }

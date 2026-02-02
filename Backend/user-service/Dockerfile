@@ -1,16 +1,9 @@
-FROM eclipse-temurin:17-jdk-alpine
-
+FROM maven:3.9.6-eclipse-temurin-17 AS builder
 WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-COPY mvnw . 
-COPY .mvn .mvn 
-COPY pom.xml . 
-RUN chmod +x mvnw
-RUN ./mvnw dependency:go-offline
-
-COPY src src 
-RUN ./mvnw clean package -DskipTests
-
-EXPOSE 8085
-
-CMD ["java", "-jar", "target/user-service-0.0.1-SNAPSHOT.jar"]
+FROM eclipse-temurin:17-jdk-alpine
+WORKDIR /app
+COPY --from=builder /app/target/user-service-*.jar user-service.jar
+ENTRYPOINT ["java", "-jar", "user-service.jar"]

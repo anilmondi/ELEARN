@@ -30,6 +30,10 @@ public class PurchaseHistory {
 
     @Column(name = "purchase_date", nullable = false, updatable = false)
     private LocalDateTime purchaseDate;
+    
+    @Column(name = "event_id", nullable = false, unique = true)
+    private String eventId;
+
 
     @PrePersist
     protected void onCreate() {

@@ -1,29 +1,42 @@
 package com.cts.elearn.service;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
+
+import java.util.concurrent.CompletableFuture;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
+import jakarta.mail.internet.MimeMessage;
 
+@Slf4j
 @Service
 public class EmailService {
 
     @Autowired
     private JavaMailSender mailSender;
 
-    public void sendEmail(String to, String subject, String body) {
+    @Async
+    public CompletableFuture<Boolean> sendEmail(String to, String subject, String body) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
             helper.setTo(to);
             helper.setSubject(subject);
-            helper.setText(body, true); // true for HTML content
+            helper.setText(body, true);
+
             mailSender.send(message);
-            System.out.println("Email sent successfully to " + to);
-        } catch (MessagingException e) {
-            System.out.println("Failed to send email: " + e.getMessage());
+
+            log.info("✅ Email sent successfully to {}", to);
+            return CompletableFuture.completedFuture(true);
+
+        } catch (Exception e) {
+            log.error("❌ Email failed for {}", to, e);
+            return CompletableFuture.completedFuture(false);
         }
     }
+
 }

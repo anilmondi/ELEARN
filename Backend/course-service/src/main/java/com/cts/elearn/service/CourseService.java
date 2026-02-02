@@ -1,8 +1,10 @@
 package com.cts.elearn.service;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,13 +12,21 @@ import com.cts.elearn.dao.CourseRepository;
 import com.cts.elearn.entity.Course;
 import com.cts.elearn.entity.Course.Category;
 import com.cts.elearn.entity.Course.CourseStatus;
+import com.cts.elearn.event.CoursePurchasedEvent;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 @Transactional
 public class CourseService {
 
     @Autowired
     private CourseRepository courseRepository;
+    
+    @Autowired
+    private KafkaTemplate<String, Object> kafkaTemplate;
+
 
     public Course createCourse(Course course) {
         return courseRepository.save(course);
@@ -58,4 +68,21 @@ public class CourseService {
         course.setStatus(CourseStatus.INACTIVE); // Soft delete
         courseRepository.save(course);
     }
+    
+    public void purchaseCourse(Long learnerId, Long courseId) {
+
+        CoursePurchasedEvent event =
+                CoursePurchasedEvent.of(learnerId, courseId, 1L);
+
+        kafkaTemplate.send(
+            "course.purchased",
+            learnerId.toString(),
+            event
+        );
+
+        log.info("📦 COURSE PURCHASE EVENT SENT | eventId={}, learnerId={}, courseId={}",
+                event.getEventId(), learnerId, courseId);
+    }
+
+
 }

@@ -1,3 +1,6 @@
 C:\Users\ACER\Desktop\ELEARN\Backend\api-gateway\src\main\java\com\cts\elearn\config\SecurityConfig.java
-C:\Users\ACER\Desktop\ELEARN\Backend\api-gateway\src\main\java\com\cts\elearn\exception\GlobalExceptionHandler.java
+C:\Users\ACER\Desktop\ELEARN\Backend\api-gateway\src\main\java\com\cts\elearn\filter\TraceIdFilter.java
+C:\Users\ACER\Desktop\ELEARN\Backend\api-gateway\src\main\java\com\cts\elearn\security\JwtAuthFilter.java
+C:\Users\ACER\Desktop\ELEARN\Backend\api-gateway\src\main\java\com\cts\elearn\config\RateLimitConfig.java
+C:\Users\ACER\Desktop\ELEARN\Backend\api-gateway\src\main\java\com\cts\elearn\security\JwtUtil.java
 C:\Users\ACER\Desktop\ELEARN\Backend\api-gateway\src\main\java\com\cts\elearn\ApiGatewayApplication.java

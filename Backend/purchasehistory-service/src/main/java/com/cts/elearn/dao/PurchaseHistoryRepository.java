@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface PurchaseHistoryRepository extends JpaRepository<PurchaseHistory, Long> {
     List<PurchaseHistory> findByLearnerId(Long learnerId); // Fetch purchases by learner
+    boolean existsByEventId(String eventId);
+
 }

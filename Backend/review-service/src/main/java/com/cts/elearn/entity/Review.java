@@ -23,7 +23,7 @@ public class Review {
 
     private Long courseId;
 
-    private int learnerId;
+    private Long learnerId;
 
     @NotBlank(message = "Review text cannot be empty")
     private String reviewText;

@@ -1,0 +1,15 @@
+# Ignore target directory
+target/
+
+# Ignore Maven wrapper
+.mvn/
+mvnw
+mvnw.cmd
+
+# Ignore .git files
+.git/
+
+# Ignore IDE and project-specific files
+.idea/
+*.iml
+*.class

@@ -1,4 +1,4 @@
-package com.cts.elearn;
+package com.cts.elearn.config;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;

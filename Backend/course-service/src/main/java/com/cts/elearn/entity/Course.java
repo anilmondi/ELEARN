@@ -61,6 +61,13 @@ public class Course {
 
     @Column(name = "price", precision = 10, scale = 2)
     private BigDecimal price;
+    
+    @Column(name = "avg_rating")
+    private BigDecimal avgRating;
+
+    @Column(name = "review_count")
+    private Integer reviewCount;
+
 
     @PrePersist
     protected void onCreate() {
